@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>SUDOKU GRAND</title>
+<style>
+  :root{--void:#06080f;--ash:#5d6b85;--ice:#dce6f5;--neon:#5fa8ff;--foe:#ff7a4f;--grid:#1a2c4a;}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+  html,body{height:100%;overflow:hidden}
+  body{background:var(--void);color:var(--ice);font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+  #menu{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:30px;background:radial-gradient(70% 60% at 50% 30%,#0b1426,#06080f 85%);transition:opacity .4s}
+  #menu.hide{opacity:0;pointer-events:none}
+  #menuBg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.4;z-index:-1}
+  .logo{width:84px;height:84px;object-fit:contain;margin-bottom:16px;filter:drop-shadow(0 0 22px rgba(95,168,255,.6))}
+  .title{font-size:30px;letter-spacing:7px;font-weight:800;margin-bottom:4px}
+  .title b{color:var(--neon);text-shadow:0 0 18px rgba(95,168,255,.5)}
+  .tagline{font-size:10px;letter-spacing:4px;color:var(--ash);text-transform:uppercase;margin-bottom:38px}
+  .modes{display:flex;flex-direction:column;gap:16px;width:100%;max-width:320px}
+  .mode{position:relative;border:1px solid var(--grid);border-radius:16px;padding:20px 22px;cursor:pointer;overflow:hidden;
+    background:linear-gradient(160deg,rgba(20,32,58,.6),rgba(10,16,32,.7));transition:transform .12s}
+  .mode:active{transform:scale(.98)}
+  .mode .label{font-size:18px;font-weight:800;letter-spacing:2px;margin-bottom:4px}
+  .mode.adv .label{color:var(--neon)} .mode.eli .label{color:var(--foe)}
+  .mode .desc{font-size:10px;line-height:1.6;color:var(--ash)}
+  .mode .badge{position:absolute;top:14px;right:16px;font-size:8px;letter-spacing:1px;padding:3px 8px;border-radius:20px;text-transform:uppercase}
+  .mode.adv .badge{background:rgba(95,168,255,.12);color:var(--neon);border:1px solid rgba(95,168,255,.3)}
+  .mode.eli .badge{background:rgba(255,122,79,.12);color:var(--foe);border:1px solid rgba(255,122,79,.3)}
+  .foot{margin-top:34px;font-size:9px;letter-spacing:2px;color:#36405a}
+  #frameWrap{position:fixed;inset:0;z-index:5;opacity:0;pointer-events:none;transition:opacity .3s;background:var(--void)}
+  #frameWrap.show{opacity:1;pointer-events:auto}
+  #gameFrame{width:100%;height:100%;border:none;display:block}
+  #backBtn{position:fixed;top:8px;left:8px;z-index:20;background:rgba(11,16,32,.92);border:1px solid var(--grid);
+    border-radius:20px;color:var(--ice);font-family:inherit;font-size:11px;letter-spacing:1px;padding:8px 14px;cursor:pointer;display:none}
+  #backBtn.show{display:block}
+  #backBtn:active{transform:scale(.95)}
+</style>
+</head>
+<body>
+<div id="menu">
+  <img id="menuBg" src="bg.jpg" alt=""/>
+  <img class="logo" src="logo.png" alt=""/>
+  <div class="title">SUDOKU <b>GRAND</b></div>
+  <div class="tagline">two ways to play</div>
+  <div class="modes">
+    <div class="mode adv" onclick="openMode('advanced.html')">
+      <span class="badge">solo</span>
+      <div class="label">ADVANCED</div>
+      <div class="desc">Premium circuit Sudoku. Chain placements for combos, light up rows, climb the difficulties.</div>
+    </div>
+    <div class="mode eli" onclick="openMode('elite.html')">
+      <span class="badge">duel</span>
+      <div class="label">ELITE</div>
+      <div class="desc">Race The Rival. Earn powers — freeze, shield, steal — and battle to finish first.</div>
+    </div>
+  </div>
+  <div class="foot">TAP A MODE TO BEGIN</div>
+</div>
+<div id="frameWrap"><iframe id="gameFrame" allow="autoplay"></iframe></div>
+<button id="backBtn" onclick="backToMenu()">‹ Menu</button>
+<script>
+function openMode(url){
+  var f=document.getElementById("gameFrame");
+  f.src=url;
+  document.getElementById("menu").classList.add("hide");
+  document.getElementById("frameWrap").classList.add("show");
+  document.getElementById("backBtn").classList.add("show");
+}
+function backToMenu(){
+  document.getElementById("frameWrap").classList.remove("show");
+  document.getElementById("backBtn").classList.remove("show");
+  document.getElementById("menu").classList.remove("hide");
+  setTimeout(function(){ if(!document.getElementById("frameWrap").classList.contains("show")) document.getElementById("gameFrame").src="about:blank"; },350);
+}
+</script>
+</body>
+</html>
